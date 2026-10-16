@@ -1,0 +1,426 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LAGOA STORE</title>
+
+<style>
+:root {
+  --fundo:#09090f;
+  --cartao:#15151f;
+  --roxo:#a855f7;
+  --claro:#c084fc;
+  --branco:#fff;
+  --cinza:#aaa6bb;
+  --borda:#30273d;
+}
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  background:var(--fundo);
+  color:var(--branco);
+  font-family:Arial,sans-serif;
+}
+header {
+  padding:22px 7%;
+  background:#101018;
+  border-bottom:1px solid var(--borda);
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:15px;
+}
+.logo { font-size:27px; font-weight:900; }
+.logo span, .banner h1 span { color:var(--claro); }
+#pesquisa {
+  width:280px;
+  max-width:100%;
+  padding:13px;
+  background:var(--cartao);
+  color:white;
+  border:1px solid var(--borda);
+  border-radius:8px;
+}
+.banner {
+  width:86%;
+  margin:35px auto;
+  padding:45px 30px;
+  border:1px solid #48265e;
+  border-radius:16px;
+  background:radial-gradient(circle at 85% 20%,#492068,transparent 43%),
+  linear-gradient(120deg,#1d1129,#101018);
+}
+.banner small { color:var(--claro); letter-spacing:3px; font-weight:bold; }
+.banner h1 { font-size:clamp(30px,5vw,46px); margin:17px 0; }
+.banner p { color:#c3bfd0; line-height:1.7; }
+main { width:86%; margin:auto; padding-bottom:50px; }
+.titulo { margin:30px 0 20px; font-size:24px; }
+.catalogo {
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px;
+  align-items:start;
+}
+.card,.carrinho {
+  background:var(--cartao);
+  border:1px solid var(--borda);
+  border-radius:14px;
+  overflow:hidden;
+}
+.cabecalho {
+  padding:22px;
+  background:linear-gradient(120deg,#29153b,#17131f);
+  border-bottom:1px solid var(--borda);
+}
+.cabecalho p { margin-top:8px; color:var(--cinza); font-size:13px; }
+.lista { padding:8px 18px; }
+.produto {
+  display:flex;
+  align-items:flex-start;
+  gap:13px;
+  padding:17px 0;
+  border-bottom:1px solid var(--borda);
+}
+.produto:last-child { border-bottom:0; }
+.emoji {
+  width:58px;
+  height:58px;
+  flex-shrink:0;
+  display:grid;
+  place-items:center;
+  background:#251833;
+  border:1px solid #382747;
+  border-radius:10px;
+  font-size:28px;
+}
+.info { flex:1; min-width:0; }
+.info h3 { font-size:14px; margin:6px 0; overflow-wrap:anywhere; }
+.descricao { color:var(--cinza); font-size:12px; line-height:1.5; }
+.preco { color:var(--claro); font-weight:bold; margin-top:8px; }
+button {
+  cursor:pointer;
+  font-weight:bold;
+  border-radius:8px;
+  padding:11px 14px;
+}
+.adicionar,.comprar {
+  border:0;
+  background:var(--roxo);
+  color:white;
+}
+.adicionar { margin-top:10px; width:100%; }
+.adicionar:hover,.comprar:hover { background:#9333ea; }
+.carrinho { margin-top:35px; padding:22px; }
+.carrinho h2 { margin-bottom:18px; }
+.item {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:15px 0;
+  border-bottom:1px solid var(--borda);
+}
+.item h3 { font-size:14px; margin-bottom:5px; }
+.quantidade { display:flex; align-items:center; gap:10px; margin-top:9px; }
+.quantidade button,.remover {
+  color:white;
+  background:#29153b;
+  border:1px solid var(--borda);
+  padding:5px 10px;
+}
+.remover { color:#ffaaaa; }
+.resumo {
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  margin-top:22px;
+  font-size:19px;
+  font-weight:bold;
+}
+.acoes { display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
+.secundario {
+  background:#201a29;
+  color:white;
+  border:1px solid var(--borda);
+}
+.aviso {
+  margin-top:22px;
+  padding:15px;
+  border:1px solid var(--borda);
+  border-radius:9px;
+  color:var(--cinza);
+  font-size:12px;
+  line-height:1.7;
+  white-space:pre-line;
+}
+#vazio { color:var(--cinza); padding:15px 0; }
+footer {
+  padding:28px 15px;
+  text-align:center;
+  border-top:1px solid var(--borda);
+  color:var(--cinza);
+  font-size:13px;
+}
+footer strong { color:var(--claro); }
+@media(max-width:700px) {
+  header { padding:20px; }
+  #pesquisa { width:100%; }
+  .banner,main { width:92%; }
+  .banner { padding:30px 20px; }
+  .catalogo { grid-template-columns:1fr; }
+}
+</style>
+</head>
+
+<body>
+<header>
+  <div class="logo">LAGOA <span>STORE</span></div>
+  <input id="pesquisa" type="search" placeholder="Pesquisar produtos...">
+</header>
+
+<section class="banner">
+  <small>NOSSA IDENTIDADE</small>
+  <h1>Bem-vindo à<br><span>LAGOA STORE</span></h1>
+  <p>Uma experiência moderna para escolher seus produtos favoritos.</p>
+</section>
+
+<main>
+  <h2 class="titulo">Nosso catálogo</h2>
+  <section class="catalogo" id="catalogo"></section>
+
+  <section class="carrinho">
+    <h2>🛒 Meu carrinho</h2>
+    <div id="itens"></div>
+    <p id="vazio">Seu carrinho está vazio.</p>
+
+    <div class="resumo">
+      <span>Total</span>
+      <span id="total">R$ 0,00</span>
+    </div>
+
+    <div class="acoes">
+      <button class="comprar" id="comprar">Comprar pelo WhatsApp</button>
+      <button class="secundario" id="limpar">Limpar carrinho</button>
+    </div>
+
+    <p class="aviso" id="mensagem" aria-live="polite">
+      Catálogo demonstrativo. Nenhum pedido ou pagamento é processado.
+    </p>
+  </section>
+
+  <p class="aviso">
+    Protótipo de demonstração com produtos fictícios. Para uma loja real,
+    utilize produtos permitidos, confirme pedidos no atendimento e processe
+    pagamentos por um provedor confiável.
+  </p>
+</main>
+
+<footer>
+  <strong>LAGOA STORE</strong> © 2026<br>
+  Protótipo demonstrativo
+</footer>
+
+<script>
+const produtos = [
+  {id:1,nome:"IGNITE V300",descricao:"30.000 Puffs",preco:145.00,emoji:"🖤",grupo:1},
+  {id:2,nome:"IGNITE V155 ULTRA SLIM",descricao:"15.500 Puffs",preco:135.00,emoji:"🖤",grupo:1},
+  {id:3,nome:"IGNTIE V55 ULTRA THIN",descricao:"5.500 Puffs",preco:120.00,emoji:"🖤",grupo:1},
+  {id:4,nome:"IGNITE V10",descricao:"1.000 Puffs",preco:75.00,emoji:"🖤",grupo:1},
+  {id:5,nome:"IGNITE V6",descricao:"600 Puffs",preco:55.00,emoji:"🖤",grupo:1},
+  {id:6,nome:"ELFBAR ICE KING 40K",descricao:"40.000 Puffs",preco:150.00,emoji:"💜",grupo:2},
+  {id:7,nome:"ELFBAR DUKE 35K",descricao:"35.000 Puffs",preco:140.00,emoji:"💜",grupo:2},
+  {id:8,nome:"ELFBAR BC 15K",descricao:"15.000 Puffs",preco:115.00,emoji:"💜",grupo:2},
+  {id:9,nome:"ELFBAR EW KIT (BATERIA + REFIL 9K)",descricao:"9.000 Puffs",preco:130.00,emoji:"💜",grupo:2},
+  {id:10,nome:"ELFBAR EW REFIL 16K",descricao:"16.000 Puffs",preco:90.00,emoji:"💜",grupo:2}
+];
+
+const carrinho = new Map();
+const catalogo = document.getElementById("catalogo");
+const itens = document.getElementById("itens");
+const vazio = document.getElementById("vazio");
+const totalElemento = document.getElementById("total");
+const mensagem = document.getElementById("mensagem");
+const pesquisa = document.getElementById("pesquisa");
+
+const dinheiro = valor => valor.toLocaleString("pt-BR", {
+  style:"currency", currency:"BRL"
+});
+
+function elemento(tag,classe,texto) {
+  const el = document.createElement(tag);
+  if (classe) el.className = classe;
+  if (texto !== undefined) el.textContent = texto;
+  return el;
+}
+
+function renderizarCatalogo() {
+  catalogo.replaceChildren();
+  const termo = pesquisa.value.trim().toLowerCase();
+
+  [
+    {id:1,titulo:"IGNITE",descricao:"YOUR LIFE, YOU WAY"},
+    {id:2,titulo:"ELFBAR",descricao:"PURE FORM, SHARP PERFORMACE"}
+  ].forEach(grupo => {
+    const listaProdutos = produtos.filter(p =>
+      p.grupo === grupo.id &&
+      (p.nome + " " + p.descricao).toLowerCase().includes(termo)
+    );
+    if (!listaProdutos.length) return;
+
+    const card = elemento("article","card");
+    const cabecalho = elemento("div","cabecalho");
+    cabecalho.append(
+      elemento("h2","",grupo.titulo),
+      elemento("p","",grupo.descricao)
+    );
+
+    const lista = elemento("div","lista");
+
+    listaProdutos.forEach(p => {
+      const produto = elemento("div","produto");
+      const emoji = elemento("div","emoji",p.emoji);
+      const info = elemento("div","info");
+
+      info.append(
+        elemento("p","descricao","PRODUTO"),
+        elemento("h3","",p.nome),
+        elemento("p","descricao",p.descricao),
+        elemento("p","preco",dinheiro(p.preco))
+      );
+
+      const botao = elemento("button","adicionar","Adicionar ao carrinho");
+      botao.addEventListener("click",() => {
+        carrinho.set(p.id,(carrinho.get(p.id)||0)+1);
+        renderizarCarrinho();
+        mensagem.textContent = "Produto adicionado ao carrinho.";
+      });
+
+      info.append(botao);
+      produto.append(emoji,info);
+      lista.append(produto);
+    });
+
+    card.append(cabecalho,lista);
+    catalogo.append(card);
+  });
+
+  if (!catalogo.children.length) {
+    catalogo.append(elemento("p","aviso","Nenhum produto encontrado."));
+  }
+}
+
+function renderizarCarrinho() {
+  itens.replaceChildren();
+  vazio.style.display = carrinho.size ? "none" : "block";
+
+  let totalCentavos = 0;
+
+  carrinho.forEach((quantidade,id) => {
+    const p = produtos.find(produto => produto.id === id);
+    if (!p) return;
+
+    const subtotal = Math.round(p.preco*100)*quantidade;
+    totalCentavos += subtotal;
+
+    const linha = elemento("div","item");
+    const info = elemento("div");
+    info.append(
+      elemento("h3","",p.nome),
+      elemento("p","descricao",dinheiro(subtotal/100))
+    );
+
+    const controles = elemento("div","quantidade");
+    const menos = elemento("button","","−");
+    const numero = elemento("span","",String(quantidade));
+    const mais = elemento("button","","+");
+
+    menos.setAttribute("aria-label","Diminuir quantidade");
+    mais.setAttribute("aria-label","Aumentar quantidade");
+
+    menos.addEventListener("click",() => alterar(id,-1));
+    mais.addEventListener("click",() => alterar(id,1));
+    controles.append(menos,numero,mais);
+    info.append(controles);
+
+    const remover = elemento("button","remover","Remover");
+    remover.addEventListener("click",() => {
+      carrinho.delete(id);
+      renderizarCarrinho();
+    });
+
+    linha.append(info,remover);
+    itens.append(linha);
+  });
+
+  totalElemento.textContent = dinheiro(totalCentavos/100);
+}
+
+function alterar(id,delta) {
+  const novaQuantidade = (carrinho.get(id)||0)+delta;
+  if (novaQuantidade <= 0) carrinho.delete(id);
+  else carrinho.set(id,novaQuantidade);
+  renderizarCarrinho();
+}
+
+document.getElementById("limpar").addEventListener("click",() => {
+  carrinho.clear();
+  renderizarCarrinho();
+  mensagem.textContent = "Carrinho limpo.";
+});
+
+document.getElementById("comprar").addEventListener("click",() => {
+  if (!carrinho.size) {
+    mensagem.textContent = "Adicione produtos antes de continuar.";
+    return;
+  }
+
+  const linhas = [...carrinho.entries()].map(([id,quantidade]) => {
+    const p = produtos.find(produto => produto.id === id);
+    const subtotal = Math.round(p.preco*100)*quantidade;
+    return `${quantidade} x ${p.nome} — ${dinheiro(subtotal/100)}`;
+  });
+
+  const centavos = [...carrinho.entries()].reduce((soma,[id,qtd]) => {
+    const p = produtos.find(produto => produto.id === id);
+    return soma + Math.round(p.preco*100)*qtd;
+  },0);
+
+  const texto = [
+    "Olá! Gostaria de consultar este pedido:",
+    "",
+    ...linhas,
+    "",
+    `Total demonstrativo: ${dinheiro(centavos/100)}`,
+    "",
+    "Pedido de demonstração; confirmar disponibilidade e valor."
+  ].join("\n");
+
+  /*
+    Para testar com produtos permitidos, configure seu número comercial
+    no formato internacional, somente números.
+    Exemplo de formato: 55 + DDD + número.
+  */
+  const numeroWhatsApp = "5586995726259";
+
+  if (!/^55\d{10,11}$/.test(numeroWhatsApp)) {
+    mensagem.textContent =
+      "Configure o número comercial no código antes de abrir o WhatsApp.";
+    return;
+  }
+
+  const url = "https://wa.me/" + numeroWhatsApp +
+    "?text=" + encodeURIComponent(texto);
+
+  // Abre outra aba e preserva o carrinho nesta página.
+  window.open(url,"_blank","noopener,noreferrer");
+});
+
+pesquisa.addEventListener("input",renderizarCatalogo);
+
+renderizarCatalogo();
+renderizarCarrinho();
+</script>
+</body>
+</html>
